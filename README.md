@@ -4,7 +4,7 @@
 
 ### Building the Command-Line Interface (CLI) container
 
-To build the image run `docker build --build-arg NETWORK=RRI -t ucdsl-tools -f ucdsl.Dockerfile .` from inside the cloned repository.
+To build the image run `docker build -t ucdsl-tools -f ucdsl.Dockerfile .` from inside the cloned repository.
 
 ### Running UC DSL files
 
@@ -18,7 +18,7 @@ That will run the `ucdsl` executable on the provided file with the provided incl
 
 UC DSL can be run within the Emacs graphical user interface and Proof General. The ucdsl-gui.Dockerfile in this repository sets up a container with a GUI that can be accessed via VNC to use these tools. It is built upon the [accetto/ubuntu-vnc-xfce-g3:24.04](https://accetto.github.io/user-guide-g3/) docker image.
 
-To build this container, run `docker build --build-arg NETWORK=RRI -t ucdsl-tools-gui -f ucdsl-gui.Dockerfile .` from inside the cloned repository.
+To build this container, run `docker build -t ucdsl-tools-gui -f ucdsl-gui.Dockerfile .` from inside the cloned repository.
 
 To run the built image run `docker run -v /PATH/TO/FOLDER/:/host -p "36901:6901" ucdsl-tools-gui`.
 
@@ -33,8 +33,6 @@ There is a new convenience script (`launch.sh`) that will assist in launching ei
 
 * Prompt: `Available launch modes: cli, gui` `Select a mode: `
   * Type `cli` for the command-line interface or `gui` for VNC GUI and press enter.
-* Prompt: `Available networks: UIUC, RRI` `Select a network: `
-  * Use `RRI` to install Riverside Research's certs, or `UIUC` for the external CI/CD on Gitlab.
 * Prompt: `Select sourcecode volume from list or enter a new absolute path to bind: `
   * See next section for a detailed explanation.
 
