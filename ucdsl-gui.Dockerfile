@@ -9,7 +9,7 @@ USER root
 RUN apt-get update && apt-get upgrade -y
 
 # Setup the dependencies
-RUN apt-get install autoconf ocaml ocaml-native-compilers camlp4-extra opam libgmp-dev libpcre3-dev pkg-config zlib1g-dev emacs -y
+RUN apt-get install autoconf ocaml ocaml-native-compilers camlp4-extra opam libgmp-dev libpcre2-dev pkg-config zlib1g-dev emacs -y
 RUN chown -R headless:headless /home/headless /dockerstartup 
 
 USER headless
@@ -22,10 +22,10 @@ RUN opam init --verbose -y && eval $(opam env)
 RUN opam install -y dune batteries
 
 # Setup Easycrypt
-RUN opam switch create 5.1.1 && eval $(opam env) && opam pin -yn add easycrypt https://github.com/EasyCrypt/easycrypt.git && opam install -y --deps-only easycrypt && eval $(opam env)
+RUN opam switch create 5.3.0 && eval $(opam env) && opam pin -yn add easycrypt https://github.com/EasyCrypt/easycrypt.git && opam install -y --deps-only easycrypt && eval $(opam env)
 
 # Setup the SMT solvers
-RUN opam pin -y alt-ergo 2.5.2
+RUN opam pin -y alt-ergo 2.6.0
 USER root
 RUN cd /opt && wget https://github.com/Z3Prover/z3/releases/download/z3-4.12.4/z3-4.12.4-x64-glibc-2.35.zip && unzip z3-4.12.4-x64-glibc-2.35.zip && ln -s /opt/z3-4.12.4-x64-glibc-2.35/bin/z3 /usr/bin/z3 && rm /opt/z3-4.12.4-x64-glibc-2.35.zip && cd /
 
@@ -42,7 +42,7 @@ RUN opam install -y easycrypt && eval $(opam env) && easycrypt why3config
 RUN opam install -y bisect_ppx
 
 # Setup UC-DSL
-RUN cd ~ && git clone https://github.com/easyuc/EasyUC.git && cd EasyUC/uc-dsl/ && eval $(opam env) && echo "/home/headless/.opam/5.1.1/lib/easycrypt/theories" | ./configure && ./build && ./install-opam
+RUN cd ~ && git clone https://github.com/easyuc/EasyUC.git && cd EasyUC/uc-dsl/ && eval $(opam env) && echo "/home/headless/.opam/5.3.0/lib/easycrypt/theories" | ./configure && ./build && ./install-opam
 
 # Setup Emacs
 COPY emacs /home/headless/.emacs
